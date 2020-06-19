@@ -49,10 +49,10 @@ module.exports = function (source) {
         files.forEach((function (file) {
             var import_module = path.basename(file, options.extension);
             var module_path = path.dirname(file);
-            var import_path = path.relative(component_dir, module_path).replace(/\\/gi, "/");
+            var import_path = path.relative(component_dir, module_path).replace(/[\/\\]/gi, "");
             import_path = component_prefix + (import_path ? import_path + "/" + import_module : import_module);
             
-            var module_name = path.relative(component_dir, module_path).replace(/\\/gi, "") + import_module;
+            var module_name = path.relative(component_dir, module_path).replace(/[\/\\]/gi, "") + import_module;
             script.push("import " + module_name + " from \"" + import_path + "\";");
             assignments.push(variable + "[\"" + import_path + "\"] = " + module_name + ";");
         }).bind(this));
